@@ -1,0 +1,578 @@
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body{
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #4b1c6d 0%, #2b0f3a 50%, #1c0a26 100%);
+}
+
+/* visually hidden (для доступности) */
+.visually-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* фоновые пятна */
+body::before,
+body::after{
+  content: "";
+  position: absolute; /* ✅ было fixed */
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+body::before{
+  background:
+    radial-gradient(circle at 15% 10%, rgba(168, 85, 247, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.28), transparent 50%);
+}
+
+body::after{
+  background:
+    radial-gradient(circle at 70% 30%, rgba(139, 92, 246, 0.22), transparent 45%);
+}
+
+/* ссылки */
+a{ color: inherit; text-decoration: none; }
+
+/* контейнер */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 20px 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  background: rgba(43, 15, 58, 0.75);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.topbar-inner{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo{
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 14px;
+  opacity: 0.92;
+}
+
+.menu{
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.menu a{
+  font-size: 14px;
+  opacity: 0.95;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+.menu a:hover{ opacity: 1; }
+
+/* ===== HERO (под новый HTML) ===== */
+.hero{
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto 18px;
+  border-radius: 22px;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeUpSoft 1s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+/* фото */
+.hero-photo{
+  margin: 0; /* figure по умолчанию имеет margin */
+}
+
+.hero-photo img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* затемнение */
+.hero::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(28,10,38,0.75),
+    rgba(28,10,38,0.15),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* имя поверх фото */
+.hero-title{
+  position: absolute;
+  left: 20px;
+  top: 22px;
+  margin: 0;
+  color: #fff;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: 1px;
+
+  opacity: 0;
+  transform: translateY(-14px);
+  animation: heroTitleIn 1s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* текст внизу фото */
+.hero-subtitle{
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+
+  margin: 0;
+  text-align: left;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.4;
+
+  color: rgba(255,255,255,0.85);
+
+  opacity: 0;
+  transform: translateY(10px);
+  animation: heroSubtitleIn 1s ease-out forwards;
+  animation-delay: 0.65s;
+}
+
+/* ===== Сетка ===== */
+.grid{
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+/* ===== Блок "Обо мне" ===== */
+.about{
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 0;
+}
+
+.about-title{
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+
+.about p{
+  margin: 0 0 12px;
+  opacity: 0.92;
+  line-height: 1.55;
+}
+
+/* ===== Услуги ===== */
+.services{
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.services h2{
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+/* Список кнопок услуг */
+.services-buttons{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.service-btn{
+  display: block;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.3;
+
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-btn:hover{
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* ===== "Подробнее" ===== */
+.about-more{
+  margin-top: 28px;
+  padding: 18px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+}
+
+.about-more-title{
+  margin: 0 0 14px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.about-more-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-more-list li{
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 12px;
+  line-height: 1.55;
+  opacity: 0.95;
+}
+
+.about-more-list li::before{
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* ===== Контакты ===== */
+.section-title{ margin: 22px 0 12px; }
+
+.contacts{
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 22px;
+}
+
+.contacts-links{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.contacts-links a{
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ===== Анимации ===== */
+@keyframes fadeUpSoft{
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroTitleIn{
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroSubtitleIn{
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Адаптив (один общий медиазапрос вместо дублей) ===== */
+@media (min-width: 900px){
+  .hero{ max-width: 620px; }
+  .hero-title{
+    font-size: 44px;
+    left: 28px;
+  }
+  .hero-subtitle{
+    font-size: 14px;
+    letter-spacing: 2.5px;
+  }
+
+  .grid{
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: start;
+  }
+
+  .about{ max-width: 620px; }
+
+  .services{
+    position: sticky;
+    top: 90px;
+  }
+}
+/* ===== SERVICES PAGE (карточки) ===== */
+.services-page{
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.services-page .title{
+  margin: 10px 0 18px;
+  font-size: 28px;
+}
+
+.services-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.services-list li{
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.services-list h2{
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.services-list p{
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.service-book{
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+}
+.service-book:hover{
+  background: rgba(255,255,255,0.12);
+}
+/* ===== SERVICES PAGE: карточки + кнопка ===== */
+
+/* заголовок страницы услуг */
+.title{
+  margin: 10px 0 18px;
+  font-size: 28px;
+}
+
+/* карточка услуги */
+.service-card{
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.service-card h3{
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.service-card p{
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* кнопка */
+.btn{
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.06);
+  transition: background .25s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.btn:hover{
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+.btn.small{
+  font-size: 14px;
+  padding: 10px 14px;
+}
+/* ===== SERVICES GRID (2 колонки на ПК) ===== */
+
+@media (min-width: 900px){
+  .services-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .service-card{
+    margin-bottom: 0; /* убираем лишние отступы в сетке */
+  }
+}
+/* ===== HOVER для карточек услуг ===== */
+
+.service-card{
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.service-card:hover{
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.35);
+}
+
+/* подсветка кнопки при наведении на карточку */
+.service-card:hover .btn{
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.35);
+}
+/* ===== MICRO-ANIMATION: кнопка ===== */
+
+.btn{
+  position: relative;
+  overflow: hidden;
+}
+
+/* лёгкое «дыхание» */
+@media (hover: hover){
+  .service-card .btn{
+    animation: btnBreath 3.5s ease-in-out infinite;
+  }
+
+  .service-card:hover .btn{
+    animation: none; /* убираем дыхание при наведении */
+  }
+}
+
+@keyframes btnBreath{
+  0%, 100%{
+    box-shadow: 0 0 0 rgba(255,255,255,0.0);
+  }
+  50%{
+    box-shadow: 0 0 18px rgba(255,255,255,0.25);
+  }
+}
+/* ===== ЦЕНА В ПРАВОМ НИЖНЕМ УГЛУ ===== */
+
+.service-card{
+  position: relative;
+  padding-bottom: 56px; /* место под цену */
+}
+
+.service-price{
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+
+  color: #fff;
+  opacity: 0.95;
+
+  background: transparent;
+  border: none;
+}
+/* ===== MINI PRICE LIST  ===== */
+
+.service-prices{
+  list-style: none;
+  margin: 8px 0 14px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.service-prices li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 15px;
+  line-height: 1.4;
+  opacity: 0.95;
+
+  padding-bottom: 4px;
+  border-bottom: 1px dashed rgba(255,255,255,0.18);
+}
+
+.service-prices li:last-child{
+  border-bottom: none;
+}
+
+.service-prices span{
+  opacity: 0.85;
+}
+
+.service-prices strong{
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px){
+  .topbar-inner{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .menu{
+    white-space: normal;     /* убрать nowrap */
+    flex-wrap: wrap;         /* разрешить перенос */
+    justify-content: center;
+  }
+}
+body::before,
+body::after{
+  z-index: -1;
+}
