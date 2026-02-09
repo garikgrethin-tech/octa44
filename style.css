@@ -142,6 +142,12 @@ a{ color: inherit; text-decoration: none; }
   );
   pointer-events: none;
 }
+@media (max-width: 768px) {
+  .hero-photo img {
+    object-fit: contain; /* не режет */
+    height: auto;
+  }
+}
 
 /* имя поверх фото */
 .hero-title{
