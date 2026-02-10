@@ -159,9 +159,10 @@ body::after{
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
-  object-position: 70% center; /* чтобы лицо не уезжало */
+  object-fit: contain;   /* НЕ режет */
+  background: #000;      /* мягкий фон если появятся поля */
 }
+
 
 /* затемнение только поверх фото */
 .hero::after{
