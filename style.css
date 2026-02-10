@@ -555,30 +555,3 @@ body::after{
 @keyframes heroSubtitleIn{
   to{ opacity: 1; transform: translateY(0); }
 }
-/* HERO на всю ширину */
-.hero-wrap{
-  width: 100%;
-  max-width: 100%;
-  padding: 0 20px;
-}
-
-.hero{
-  max-width: 1100px;     /* теперь hero широкий */
-  margin: 0 auto 22px;
-}
-
-.hero-photo img{
-  width: 100%;
-  height: min(72vh, 720px);  /* hero “высокий” на больших экранах */
-  object-fit: cover;
-}
-
-/* На очень больших экранах делаем красивее */
-@media (min-width: 1200px){
-  .hero{
-    max-width: 1280px;
-  }
-  .hero-photo img{
-    height: min(78vh, 820px);
-  }
-}
